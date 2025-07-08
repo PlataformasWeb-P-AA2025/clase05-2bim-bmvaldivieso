@@ -22,8 +22,14 @@
 
 1. Instalar pip install django-allauth
 
-2. Agregar información en
+3. Agregar información en
 
 2.1 settings.py
 
 2.2 templates
+
+# Capturas
+
+![Captura de pantalla_20250708_095224](https://github.com/user-attachments/assets/1c4f365c-2c1b-4142-80e2-1948086e48a9)
+
+![Captura de pantalla_20250708_095211](https://github.com/user-attachments/assets/65372908-111d-44c9-8597-8a75810d637d)
