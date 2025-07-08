@@ -15,6 +15,11 @@ from administrativo.forms import *
 
 # Create your views here.
 
+def en_grupo(nombre):
+    def predicate(user):
+        return user.groups.filter(name=nombre).exists()
+    return user_passes_test(predicate)
+
 def index(request):
     """
         Listar los registros del modelo Estudiante,
@@ -56,7 +61,7 @@ def logout_view(request):
 
 @login_required # es mejor usar este por que evita depender de la url y respeta la filosofia de django
                 # de tener todo independiente
-@permission_required('administrativo.view_estudiante')
+@en_grupo('supervisor')
 def obtener_estudiante(request, id):
     """
         Listar los registros del modelo Estudiante,
@@ -76,7 +81,7 @@ def obtener_estudiante(request, id):
 
 # @login_required(login_url='/entrando/login/')
 @login_required
-@permission_required('administrativo.add_estudiante', )
+@en_grupo('supervisor')
 # @permission_required('administrativo.add_estudiante', login_url="/entrando/login/")
 def crear_estudiante(request):
     """
@@ -96,7 +101,7 @@ def crear_estudiante(request):
 
 # @login_required(login_url='/entrando/login/')
 @login_required
-@permission_required('administrativo.change_estudiante',)
+@en_grupo('supervisor')
 def editar_estudiante(request, id):
     """
     """
@@ -114,7 +119,7 @@ def editar_estudiante(request, id):
     return render(request, 'editarEstudiante.html', diccionario)
 
 @login_required
-@permission_required('administrativo.delete_estudiante')
+@en_grupo('supervisor')
 def eliminar_estudiante(request, id):
     """
     """
@@ -124,10 +129,7 @@ def eliminar_estudiante(request, id):
 
 # atención para permitir que una función sea usada por
 # un grupo específico
-def en_grupo(nombre):
-    def predicate(user):
-        return user.groups.filter(name=nombre).exists()
-    return user_passes_test(predicate)
+
 
 @login_required
 @en_grupo('supervisor')
@@ -148,7 +150,7 @@ def crear_numero_telefonico(request):
     return render(request, 'crearNumeroTelefonico.html', diccionario)
 
 @login_required
-@permission_required('administrativo.change_numeroTelefonico')
+@en_grupo('supervisor')
 def editar_numero_telefonico(request, id):
     """
     """
@@ -166,7 +168,7 @@ def editar_numero_telefonico(request, id):
     return render(request, 'crearNumeroTelefonico.html', diccionario)
 
 @login_required
-@permission_required('administrativo.add_numeroTelefonicoEstudiante')
+@en_grupo('supervisor')
 def crear_numero_telefonico_estudiante(request, id):
     """
     """
